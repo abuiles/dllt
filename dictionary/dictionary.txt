@@ -1,0 +1,6 @@
+the cat:el gato
+the dog: el perro
+hola: hello
+test:hello
+hola:hello
+olamundo
