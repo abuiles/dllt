@@ -1,9 +1,8 @@
 module DLLT
-  class Handler
-    def initialize(file)
-      @file = file
+  module Handler
+    def file_modified
+      puts "#{path} modified"
+      puts "sending changes"
     end
-
-    attr_accessor :file
   end
 end
