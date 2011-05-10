@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift("lib")
+
+require 'eventmachine'
+require 'dllt'
+
+
+
+EventMachine::run do
+  DLLT::Guard.start
+
+  quit = Proc.new {
+    EM.stop
+  }
+
+  Signal.trap "INT", quit
+  Signal.trap "TERM", quit
+end
+
