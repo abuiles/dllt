@@ -9,6 +9,7 @@ require 'dllt'
 
 EventMachine::run do
   DLLT::Guard.start
+  DLLT::Unison.start('9000')
 
   quit = Proc.new {
     EM.stop
