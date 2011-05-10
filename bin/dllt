@@ -2,13 +2,13 @@
 
 $LOAD_PATH.unshift("lib")
 
-require 'eventmachine'
 require 'dllt'
 
 
+EM.kqueue = true if EM.kqueue? # file watching requires kqueue on OSX
 
 EventMachine::run do
-  DLLT::Guard.start
+  DLLT::Guard.start('dictionary/dictionary.txt')
   DLLT::Unison.start('9000')
 
   quit = Proc.new {
@@ -18,4 +18,3 @@ EventMachine::run do
   Signal.trap "INT", quit
   Signal.trap "TERM", quit
 end
-
