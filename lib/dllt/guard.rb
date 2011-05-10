@@ -2,15 +2,15 @@ require 'posix/spawn'
 
 module DLLT
   class Guard
-     @@pid
-
     def self.start
-      @@pid = spawn('guard')
-      puts "guard started, pid: #{@@pid}"
+      unless @pid
+        @pid = spawn('guard')
+      end
+      puts "guard started, pid: #{@pid}"
     end
 
     def self.pid
-      @@pid
+      @pid
     end
   end
 end
