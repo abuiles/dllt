@@ -15,7 +15,7 @@ module DLLT
     end
 
     def self.sync_file(file, host)
-      DLLT.check_reactor
+      check_reactor
 
       command = "unison #{file} socket://#{host}/dictionary/dictionary.txt -auto -batch -force #{file}"
       deferrable = EM::DeferrableChildProcess.open(command)
