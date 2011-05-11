@@ -2,6 +2,6 @@
 
 require 'pamela'
 
-Pamela.load :console
+Pamela.load :console, :test
 
-
+task :default => [:test]
