@@ -10,7 +10,7 @@ describe DLLT::Helpers do
 
   describe "#check_reactor" do
     it "should raise a RunTimeError if EM is not running" do
-      EM.expects(:reactor_running?).returns(false)
+      EM.stubs(:reactor_running?).returns(false)
 
       proc { DLLT::Helpers.check_reactor }.must_raise RuntimeError
     end
