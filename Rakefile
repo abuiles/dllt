@@ -1,7 +1,9 @@
-# Empty Rakefile...
-
 require 'pamela'
 
-Pamela.load :console, :test
+Pamela.load :test
 
 task :default => [:test]
+
+task :console do
+  exec("irb -rubygems -Ilib -rdllt")
+end
