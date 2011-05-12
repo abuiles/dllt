@@ -1,0 +1,3 @@
+#Notify client about incoming changes to avoid the Guard
+#Notify client about update finished to enable Guard again
+#Remeber words
