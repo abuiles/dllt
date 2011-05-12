@@ -4,34 +4,51 @@ module DLLT
   class Client
     include DRbUndumped
 
-    def initialize(url)
-      puts url
-      @server_url = url
+    def initialize(server_url, uri, port)
+      @uri = uri
+      @port = port
+      @server_url = server_url
+      puts @server_url
       @server = DRbObject.new nil, @server_url
       @server.register(self)
       puts @server.get_clients.inspect
     end
 
+    attr_accessor :uri, :port
+
     def unregister
       @server.unregister(self)
+      DRb.stop_service
+    end
+  end
+
+  module ClientServer
+    def self.get_ip
+      #taken from http://stackoverflow.com/questions/42566/getting-the-hostname-or-ip-in-ruby-on-rails/42923#42923
+      require 'socket'
+
+      orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true
+      UDPSocket.open do |s|
+        s.connect '64.233.187.99', 1
+        s.addr.last
+      end
+    ensure
+      Socket.do_not_reverse_lookup = orig
+    end
+
+    def self.start(server_host, client_port)
+      client_url = "druby://localhost:#{client_port}"
+      server_url = "druby://#{server_host}"
+      DRb.start_service(client_url)
+      @client = DLLT::Client.new(server_url, get_ip, client_port)
+    end
+
+    def self.unregister
+      puts "\nQuitting client\n"
+      @client.unregister
     end
   end
 end
 
-#Starts the service, and keeps listening until an interruption happens
-DRb.start_service
-client = DLLT::Client.new(ARGV[0])
-
-#exit function
-quit = Proc.new do
-  puts "\nQuitting client"
-  client.unregister
-  exit 0
-end
-
-Signal.trap("TERM", quit)
-Signal.trap("INT", quit)
-
-DRb.thread.join
 
 
