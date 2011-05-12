@@ -1,3 +1,6 @@
-#Notify client about incoming changes to avoid the Guard
-#Notify client about update finished to enable Guard again
+#Sync file with clients
+ - #Get clients
+ - #Notify client about incoming changes to avoid the Guard
+ - #Send changes
+ - #Notify client about update finished to enable Guard again
 #Remeber words
