@@ -1,4 +1,10 @@
 module DLLT
+  module UnisonWatcher
+    def unbind
+     puts "Unison finished"
+   end
+  end
+
   class Unison
     extend Helpers
 
@@ -17,8 +23,9 @@ module DLLT
     def self.sync_file(file, host)
       check_reactor
 
-      command = "unison #{file} socket://#{host}/dictionary/dictionary.txt -auto -batch -force #{file}"
-      deferrable = EM::DeferrableChildProcess.open(command)
+      command = "unison #{file} socket://#{host}/#{file} -auto -batch -force #{file}"
+
+      EM.popen(command, UnisonWatcher)
     end
   end
 end
