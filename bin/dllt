@@ -8,10 +8,13 @@ require 'dllt'
 EM.kqueue = true if EM.kqueue? # file watching requires kqueue on OSX
 
 EventMachine::run do
+  DLLT::ClientServer.start('localhost:9001', '9002')
   DLLT::Guard.start('dictionary/dictionary.txt')
   DLLT::Unison.start('9000')
 
   quit = Proc.new {
+    puts "quitting EM"
+    DLLT::ClientServer.unregister
     EM.stop
   }
 
