@@ -14,14 +14,18 @@ module DLLT
       puts @server.get_clients.inspect
     end
 
-    attr_accessor :uri, :port
+    attr_accessor :uri, :port, :server
 
     def unregister
       @server.unregister(self)
       DRb.stop_service
     end
+
+    def get_clients
+      clients = @server.get_clients
+      clients.delete(self)
+      clients
+    end
   end
 end
-
-
 
