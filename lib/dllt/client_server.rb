@@ -26,37 +26,29 @@ module DLLT
     end
 
     def self.sync_file(path)
-      puts "Done::Notify_incoming_change"
-      notify_incoming_update(path)
-      puts "TODO::call unison synv"
-      puts "Done::Notify sync finished"
-      # notify_finished_update(path)
+      if @client.updateable
+        puts "Change made by other user"
+        puts "Done::Notify_incoming_change"
+        notify_incoming_update(path)
+        sync_clients_file
+        # notify_finished_update(path)
+      else
+        puts "Change made by other client"
+      end
+    end
+
+    def self.sync_clients_file(path)
+      @clients = @client.get_clients
+      @clients.each do |client|
+        Unison.sync_file(path, client)
+      end
     end
 
     def self.notify_incoming_update(path)
       @clients = @client.get_clients
       @clients.each do |client|
-        client_url = "druby://#{client.uri}:#{client.port}"
-        client_server = DRbObject.new nil, client_url
-        client_server.prepare_for_update(path)
+        client.prepare_for_update(path)
       end
-    end
-
-    def self.notify_finished_update
-      @clients = @client.get_clients
-      @clients.each do |client|
-        client_url = "druby://#{client.uri}/#{client.port}"
-        client_server = DRbObject.new nil, client_url
-        client_server.update_finished(path)
-      end
-    end
-
-    def self.prepare_for_update(path)
-      puts "The file is going to be updated #{path}"
-    end
-
-    def self.update_finished(path)
-      puts "Update finished in file  #{path}"
     end
   end
 end

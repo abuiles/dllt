@@ -5,16 +5,16 @@ module DLLT
     include DRbUndumped
 
     def initialize(server_url, uri, port)
+      @updateable = true
       @uri = uri
       @port = port
       @server_url = server_url
       puts @server_url
       @server = DRbObject.new nil, @server_url
       @server.register(self)
-      puts @server.get_clients.inspect
     end
 
-    attr_accessor :uri, :port, :server
+    attr_accessor :uri, :port, :server, :updateable
 
     def unregister
       @server.unregister(self)
@@ -25,6 +25,16 @@ module DLLT
       clients = @server.get_clients
       clients.delete(self)
       clients
+    end
+
+    def prepare_for_update(path)
+      @updateable = false
+      puts "The file is going to be updated #{path}"
+    end
+
+    def update_finished(path)
+      @updateable = true
+      puts "Update finished in file  #{path}"
     end
   end
 end
