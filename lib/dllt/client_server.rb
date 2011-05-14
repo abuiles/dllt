@@ -14,7 +14,7 @@ module DLLT
     end
 
     def self.start(server_host, client_port)
-      client_url = "druby://localhost:#{client_port}"
+      client_url = "druby://#{get_ip}:#{client_port}"
       server_url = "druby://#{server_host}"
       DRb.start_service(client_url)
       @client = DLLT::Client.new(server_url, get_ip, client_port)
