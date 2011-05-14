@@ -29,7 +29,6 @@ module DLLT
 
     def prepare_for_update(path)
       @updateable = false
-      DLLT::Guard.stop
       puts "The file is going to be updated #{path}"
     end
 
