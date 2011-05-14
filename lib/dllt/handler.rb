@@ -7,17 +7,14 @@ module DLLT
 
     def stop_watching
       puts "stop_watching called"
-      super
     end
 
     def file_moved
       puts "file_moved called"
-      super
     end
 
     def file_deleted
       puts "file_deleted called"
-      super
     end
   end
 end
