@@ -35,7 +35,7 @@ module DLLT
 
     def update_finished(path)
       @updateable = true
-      DLLT::Guard.start
+      DLLT::Guard.start('dictionary/dictionary.txt')
       puts "Update finished in file  #{path}"
     end
   end
