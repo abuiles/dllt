@@ -4,12 +4,14 @@ module DLLT
 
     def self.start(file)
       check_reactor
-      EM.watch_file(file, Handler)
+      @watcher = EM.watch_file(file, Handler)
     end
 
-    def self.stop(file)
+    def self.stop
       check_reactor
-      EM.watch_file(file, Handler)
+
+      puts "stopping watcher manually"
+      @watcher.stop_watching
     end
   end
 end

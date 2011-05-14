@@ -29,11 +29,13 @@ module DLLT
 
     def prepare_for_update(path)
       @updateable = false
+      DLLT::Guard.stop
       puts "The file is going to be updated #{path}"
     end
 
     def update_finished(path)
       @updateable = true
+      DLLT::Guard.start
       puts "Update finished in file  #{path}"
     end
   end
