@@ -14,7 +14,7 @@ module DLLT
     end
 
     def unregister(client)
-      puts "#{client} is unregistering"
+      puts "#{client.uri}:#{client.port} is unregistering"
       @clients.delete(client)
     end
 
