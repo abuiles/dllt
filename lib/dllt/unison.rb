@@ -20,12 +20,15 @@ module DLLT
       @pid
     end
 
-    def self.sync_file(file, host)
+    def self.sync_file(file, client)
       check_reactor
 
-      command = "unison #{file} socket://#{host}/#{file} -auto -batch -force #{file}"
+      command = "unison #{file} socket://#{client.uri}:9000/#{file} -auto -batch -force #{file}"
 
-      EM.popen(command, UnisonWatcher)
+      EM.system(command) do
+        puts "Unison finished notifying to #{client.uri}"
+        client.update_finished(file)
+      end
     end
   end
 end
