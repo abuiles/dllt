@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+
+$LOAD_PATH.unshift("lib")
+
+require 'dllt'
+
+ip = DLLT::ClientServer.get_ip
+DRb.start_service "druby://#{ip}:9001", DLLT::Server.new
+puts DRb.uri
+
+DRb.thread.join

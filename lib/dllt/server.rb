@@ -1,5 +1,4 @@
 require 'drb'
-require 'ruby-debug'
 
 module DLLT
   class Server
@@ -24,9 +23,3 @@ module DLLT
     end
   end
 end
-
-# Starts the servive
-DRb.start_service "druby://localhost:9001", DLLT::Server.new
-puts DRb.uri
-
-DRb.thread.join
