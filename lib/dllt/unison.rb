@@ -1,10 +1,4 @@
 module DLLT
-  module UnisonWatcher
-    def unbind
-     puts "Unison finished"
-   end
-  end
-
   class Unison
     extend Helpers
 
