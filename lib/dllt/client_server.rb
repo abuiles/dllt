@@ -31,7 +31,6 @@ module DLLT
         puts "Done::Notify_incoming_change"
         notify_incoming_update(path)
         sync_clients_file(path)
-        # notify_finished_update(path)
       else
         puts "TODO::reload file in app"
         puts "Change made by other client"
