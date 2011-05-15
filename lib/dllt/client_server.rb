@@ -25,28 +25,26 @@ module DLLT
       @client.unregister
     end
 
+
     def self.sync_file(path)
       if @client.updateable
-        puts "Change made by other user"
-        puts "Done::Notify_incoming_change"
-        notify_incoming_update(path)
-        sync_clients_file(path)
+        clients = @client.get_clients
+        notify_incoming_update(path, clients)
+        sync_clients_file(path, clients)
       else
         puts "TODO::reload file in app"
         puts "Change made by other client"
       end
     end
 
-    def self.sync_clients_file(path)
-      @clients = @client.get_clients
-      @clients.each do |client|
+    def self.sync_clients_file(path, clients)
+      clients.each do |client|
         Unison.sync_file(path, client)
       end
     end
 
-    def self.notify_incoming_update(path)
-      @clients = @client.get_clients
-      @clients.each do |client|
+    def self.notify_incoming_update(path, clients)
+      clients.each do |client|
         client.prepare_for_update(path)
       end
     end
