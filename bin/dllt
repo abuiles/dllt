@@ -17,7 +17,7 @@ EventMachine::run do
     a,b = words[rand(words.count)].split(':')
 
     if a && b
-      [a.split, b.split]
+      [a.strip, b.strip]
     else
       ['Linea', 'maliciosa']
     end
