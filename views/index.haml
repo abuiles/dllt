@@ -1,0 +1,24 @@
+!!!
+%html
+  %head
+    %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", :type => "text/javascript"}
+  %body
+    %h1 Do you remember the meaning?
+    #word
+      %h2= @word
+    #meaning{:style => 'display: none'}
+      %h2= @meaning
+    %br
+    %button{:type => "button", :id => 'showMeaning'} Show Meaning!
+    %button{:type => "button", :id => 'showNext'} Next Word
+
+:javascript
+  $(document).ready(function() {
+     $('#showMeaning').click(function(){
+       $('#meaning').show();
+     });
+
+     $('#showNext').click(function(){
+       location.reload();
+     });
+  });

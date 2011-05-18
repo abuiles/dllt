@@ -8,9 +8,25 @@ require 'dllt'
 EM.kqueue = true if EM.kqueue? # file watching requires kqueue on OSX
 
 EventMachine::run do
-  DLLT::ClientServer.start('10.0.65.208:9001', '9002')
-  DLLT::Guard.start('dictionary/dictionary.txt')
+  FILE_PATH = 'dictionary/dictionary.txt'
+
+  def DLLT.get_words
+    words  = []
+
+    File.read(FILE_PATH).lines{|substr| words <<  substr.chomp  }
+    a,b = words[rand(words.count)].split(':')
+
+    if a && b
+      [a.split, b.split]
+    else
+      ['Linea', 'maliciosa']
+    end
+  end
+
+  DLLT::ClientServer.start('192.168.1.111:9001', '9002')
+  DLLT::Guard.start(FILE_PATH)
   DLLT::Unison.start('9000')
+  DLLT::WebClient.run!({:port => 3000})
 
   quit = Proc.new {
     puts "quitting EM"
