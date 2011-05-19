@@ -9,6 +9,13 @@ EM.kqueue = true if EM.kqueue? # file watching requires kqueue on OSX
 
 EventMachine::run do
   FILE_PATH = 'dictionary/dictionary.txt'
+  SERVER_IP = ARGV[0]
+
+  unless SERVER_IP
+    puts "You must give the server IP as parameter"
+    puts "Example: bin/dllt 192.168.1.1"
+    exit 0
+  end
 
   def DLLT.get_words
     words  = []
@@ -23,7 +30,7 @@ EventMachine::run do
     end
   end
 
-  DLLT::ClientServer.start('192.168.1.111:9001', '9002')
+  DLLT::ClientServer.start("#{SERVER_IP}:9001", '9002')
   DLLT::Guard.start(FILE_PATH)
   DLLT::Unison.start('9000')
   DLLT::WebClient.run!({:port => 3000})
